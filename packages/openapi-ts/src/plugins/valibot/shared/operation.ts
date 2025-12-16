@@ -144,11 +144,16 @@ export const irOperationToAst = ({
 
   if (plugin.config.responses.enabled) {
     if (operation.responses) {
-      const { response } = operationResponsesMap(operation);
+      const { errors, responses } = operationResponsesMap(operation);
+      const all = {
+        properties: { ...responses?.properties, ...errors?.properties },
+        required: [...(responses?.required ?? []), ...(errors?.required ?? [])],
+        type: 'object' as const,
+      };
 
-      if (response) {
+      if (responses || errors) {
         const path = [...fromRef(state.path), 'responses'];
-        const ast = getAst(response, path);
+        const ast = getAst(all, path);
         const symbol = plugin.registerSymbol({
           meta: {
             category: 'schema',
@@ -167,7 +172,7 @@ export const irOperationToAst = ({
         exportAst({
           ast,
           plugin,
-          schema: response,
+          schema: all,
           state,
           symbol,
         });
