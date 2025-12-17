@@ -12,16 +12,16 @@ export const enumToAst = ({
 }: IrSchemaToAstOptions & {
   schema: SchemaWithType<'enum'>;
 }): ReturnType<typeof $.call> => {
-  const enumMembers: Array<ReturnType<typeof $.literal>> = [];
+  const enumMembers: Array<ReturnType<typeof $.fromValue>> = [];
 
   let isNullable = false;
 
   for (const item of schema.items ?? []) {
     // Zod supports only string enums
-    if (item.type === 'string' && typeof item.const === 'string') {
-      enumMembers.push($.literal(item.const));
-    } else if (item.type === 'null' || item.const === null) {
+    if (item.type === 'null' || item.const === null) {
       isNullable = true;
+    } else {
+      enumMembers.push($.fromValue(item.const));
     }
   }
 
