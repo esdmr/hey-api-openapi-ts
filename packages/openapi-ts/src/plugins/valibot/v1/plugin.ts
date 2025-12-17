@@ -85,7 +85,7 @@ export const irSchemaToAst = ({
     if (plugin.config.metadata && schema.examples) {
       const expression = $(v)
         .attr(identifiers.actions.examples)
-        .call($.array().elements($.fromValue(schema.examples)));
+        .call($.fromValue(schema.examples));
       ast.pipes.push(expression);
     }
   } else if (schema.items) {
