@@ -70,8 +70,22 @@ export const irSchemaToAst = ({
 
     if (plugin.config.metadata && schema.description) {
       const expression = $(v)
-        .attr(identifiers.actions.metadata)
-        .call($.object().prop('description', $.literal(schema.description)));
+        .attr(identifiers.actions.description)
+        .call($.literal(schema.description));
+      ast.pipes.push(expression);
+    }
+
+    if (plugin.config.metadata && schema.example) {
+      const expression = $(v)
+        .attr(identifiers.actions.examples)
+        .call($.array().element($.fromValue(schema.example)));
+      ast.pipes.push(expression);
+    }
+
+    if (plugin.config.metadata && schema.examples) {
+      const expression = $(v)
+        .attr(identifiers.actions.examples)
+        .call($.array().elements($.fromValue(schema.examples)));
       ast.pipes.push(expression);
     }
   } else if (schema.items) {

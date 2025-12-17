@@ -142,6 +142,7 @@ interface IRSchemaObject
     | 'required'
     | 'title'
     | 'example'
+    | 'examples'
   > {
   /**
    * If the schema is intended to be used as an object property, it can be

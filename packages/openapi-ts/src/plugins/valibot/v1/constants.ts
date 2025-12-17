@@ -21,6 +21,7 @@ export const identifiers = {
     endsWith: 'endsWith',
     entries: 'entries',
     everyItem: 'everyItem',
+    examples: 'examples',
     excludes: 'excludes',
     filterItems: 'filterItems',
     findItem: 'findItem',

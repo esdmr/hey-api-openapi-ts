@@ -43,6 +43,10 @@ const parseSchemaJsDoc = ({
     irSchema.example = schema.example;
   }
 
+  if ('examples' in schema && Array.isArray(schema.examples)) {
+    irSchema.examples = schema.examples;
+  }
+
   if (schema.description) {
     irSchema.description = schema.description;
   }
